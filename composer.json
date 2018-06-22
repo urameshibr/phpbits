@@ -1,0 +1,25 @@
+{
+  "name": "urameshibr/bingofw",
+  "description": "Mini framework PHPOO",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Root\\": "src/",
+      "App\\": "app/"
+    },
+    "files": [
+      "app/helpers.php"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "require-dev": {
+    "filp/whoops": "^2.2"
+  }
+}
