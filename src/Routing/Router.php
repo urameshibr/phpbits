@@ -52,12 +52,19 @@ class Router
             $this->setHeaderContentType($this->headerContentType);
             $this->response = json_encode($response);
         }
+
         if ($response === 0) {
             $this->response = (string)$response;
         }
 
         if (is_bool($response) && !$response) {
             $this->response = (string)0;
+        }
+
+        if (is_object($response)) {
+            $this->headerContentType = 'json';
+            $this->setHeaderContentType($this->headerContentType);
+            $this->response = json_encode($response);
         }
 
         return $this;
@@ -94,6 +101,9 @@ class Router
 
     private function runClosure(\Closure $closure)
     {
-        return $closure();
+        $this->response = $closure();
+        $this->configureHeaders($this->response);
+
+        return $this->response;
     }
 }
