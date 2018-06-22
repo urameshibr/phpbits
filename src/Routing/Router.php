@@ -72,9 +72,9 @@ class Router
         ];
     }
 
-    public function get(string $uri = '/', $action)
+    public function get(string $uri, $action)
     {
-        $this->addRoute('GET', $uri, $action);
+        $this->addRoute('GET', empty($uri) ? '/' : $uri, $action);
 
         return $this;
     }

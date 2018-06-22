@@ -4,10 +4,6 @@ namespace Root\Routing;
 
 class Controller
 {
-    public function index()
-    {
-        return [
-            'Dentro do controller'
-        ];
-    }
+    //TODO ATRIBUTOS (ROUTER, REQUEST, REDIRECT)
+    //TODO CONSTRUTOR
 }
