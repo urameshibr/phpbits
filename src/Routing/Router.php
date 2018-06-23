@@ -9,16 +9,27 @@ class Router
 
     private $headerContentType;
     private $current_uri;
+    private $current_url;
+    private $query_string;
+    private $request_scheme;
+    private $request_method;
+    private $server_name;
     private $response;
     private $routes;
 
     public function handle()
     {
-        $this->current_uri = $_SERVER['REQUEST_URI'];
-        if ($this->current_uri !== '/' && file_exists(__DIR__ . '/../../public' . $this->current_uri)) return false;
+        $this->current_url = empty($_SERVER['REDIRECT_URL']) ? '/' : $_SERVER['REDIRECT_URL']; // TODO CAUSA ERRO
+//        $this->current_uri = $_SERVER['REQUEST_URI'];
+//        $this->query_string = $_SERVER['QUERY_STRING']; // explode &
+//        $this->request_scheme = $_SERVER['REQUEST_SCHEME'];
+//        $this->request_method = $_SERVER['REQUEST_METHOD'];
+//        $this->server_name = $_SERVER['SERVER_NAME'];
+
+        if ($this->current_url !== '/' && file_exists(__DIR__ . '/../../public' . $this->current_url)) return false;
 
         foreach ($this->routes as $route) {
-            if ($route['uri'] === $this->current_uri) return $this->runAction($route['action']);
+            if ($route['url'] === $this->current_url) return $this->runAction($route['action']);
         }
 
         header("HTTP/1.1 404");
@@ -70,18 +81,18 @@ class Router
         return $this;
     }
 
-    public function addRoute(string $verb, $uri, $action)
+    public function addRoute(string $verb, $url, $action)
     {
         $this->routes[] = [
             'verb' => $verb,
-            'uri' => $uri,
+            'url' => $url,
             'action' => $action,
         ];
     }
 
-    public function get(string $uri, $action)
+    public function get(string $url, $action)
     {
-        $this->addRoute('GET', empty($uri) ? '/' : $uri, $action);
+        $this->addRoute('GET', empty($url) ? '/' : $url, $action);
 
         return $this;
     }
