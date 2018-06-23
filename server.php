@@ -6,6 +6,7 @@
  * Time: 22:45
  */
 
-$router = new \Root\Routing\Router();
-$server = new \Root\Server($router);
+require(__DIR__.'/src/config/container.php');
+
+$server = $container['Server'];
 $server->start();

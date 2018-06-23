@@ -15,8 +15,6 @@ class Router
 
     public function handle(string $redirect_url, array $server_attributes = [])
     {
-        print_r($server_attributes);
-
         $redirect_url = empty($redirect_url) ? '/' : $redirect_url;
 
         if ($redirect_url !== '/' && file_exists(__DIR__ . '/../../public' . $redirect_url)) return false;

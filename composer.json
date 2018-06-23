@@ -5,6 +5,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
+    "pimple/pimple": "^3.2"
   },
   "autoload": {
     "psr-4": {
@@ -12,7 +13,8 @@
       "App\\": "app/"
     },
     "files": [
-      "app/helpers.php"
+      "app/helpers.php",
+      "src/root_helpers.php"
     ]
   },
   "config": {
