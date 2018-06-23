@@ -6,5 +6,6 @@
  * Time: 22:45
  */
 
-$server = new \Root\Server();
+$router = new \Root\Routing\Router();
+$server = new \Root\Server($router);
 $server->start();

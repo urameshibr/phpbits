@@ -2,34 +2,27 @@
 
 namespace Root\Routing;
 
+use Root\Server;
+
 class Router
 {
     const CONTENT_TYPE_JSON = 'json';
     const CONTENT_TYPE_TEXT_HTML = 'text_html';
 
     private $headerContentType;
-    private $current_uri;
-    private $current_url;
-    private $query_string;
-    private $request_scheme;
-    private $request_method;
-    private $server_name;
     private $response;
     private $routes;
 
-    public function handle()
+    public function handle(string $redirect_url, array $server_attributes = [])
     {
-        $this->current_url = empty($_SERVER['REDIRECT_URL']) ? '/' : $_SERVER['REDIRECT_URL']; // TODO CAUSA ERRO
-//        $this->current_uri = $_SERVER['REQUEST_URI'];
-//        $this->query_string = $_SERVER['QUERY_STRING']; // explode &
-//        $this->request_scheme = $_SERVER['REQUEST_SCHEME'];
-//        $this->request_method = $_SERVER['REQUEST_METHOD'];
-//        $this->server_name = $_SERVER['SERVER_NAME'];
+        print_r($server_attributes);
 
-        if ($this->current_url !== '/' && file_exists(__DIR__ . '/../../public' . $this->current_url)) return false;
+        $redirect_url = empty($redirect_url) ? '/' : $redirect_url;
+
+        if ($redirect_url !== '/' && file_exists(__DIR__ . '/../../public' . $redirect_url)) return false;
 
         foreach ($this->routes as $route) {
-            if ($route['url'] === $this->current_url) return $this->runAction($route['action']);
+            if ($route['url'] === $redirect_url) return $this->runAction($route['action']);
         }
 
         header("HTTP/1.1 404");
