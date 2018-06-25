@@ -6,7 +6,20 @@
  * Time: 22:45
  */
 
-require(__DIR__.'/src/config/container.php');
+use \Root\Container\Container;
+use \Root\Routing\Router;
+use \Root\Server;
 
-$server = $container['Server'];
+/**
+ * @param string $path
+ * @return string
+ */
+function root_path($path = '/')
+{
+    return __DIR__ . $path;
+}
+
+$container = Container::getInstance();
+$router = Router::getInstance();
+$server = Server::getInstance($router, $container);
 $server->start();

@@ -13,6 +13,14 @@ class Router
     private $response;
     private $routes;
 
+    public static function getInstance()
+    {
+        static $instance = null;
+        if (is_null($instance)) $instance = new static();
+
+        return $instance;
+    }
+
     public function handle(string $redirect_url, array $server_attributes = [])
     {
         $redirect_url = empty($redirect_url) ? '/' : $redirect_url;

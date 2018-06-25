@@ -1,9 +1,9 @@
 <?php
 
-$this->router->get('/', function(){
+$this->router->get('/', function () {
 
-    return new \App\Models\Test(); // json encoded
-
+    $a = container()->get('Test');
+    dj($a);
 });
 
 $this->router->get('/controller', 'App\Http\Controllers\CustomerController@index');

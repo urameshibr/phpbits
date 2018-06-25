@@ -1,8 +1,24 @@
 <?php
 
 if (!function_exists('container')) {
-    function container($bind_name = '')
+    /**
+     * @return null|\Root\Container\Container
+     */
+    function container()
     {
-        return new \Pimple\Container();
+        return \Root\Container\Container::getInstance();
+    }
+}
+
+if (!function_exists('dj')) {
+    /**
+     * @param $response
+     * @return void
+     */
+    function dj($response)
+    {
+        header('Content-type: Application/json');
+        var_dump($response);
+        die();
     }
 }

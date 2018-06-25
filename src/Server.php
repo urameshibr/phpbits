@@ -3,21 +3,41 @@
 namespace Root;
 
 use Root\Routing\Router;
+use Root\Container\Container as RootContainer;
 
 class Server
 {
     /** @var Router $router */
     protected $router;
     private $attributes = [];
+    private $container;
 
-    public function __construct(Router $router)
+    public function __construct(Router $router, RootContainer $container)
     {
+        $this->container = $container;
         $this->setAttributes();
         $this->router = $router;
     }
 
+    /**
+     * @param Router $router
+     * @param RootContainer $container
+     * @return null|Server
+     */
+    public static function getInstance(Router $router, RootContainer $container)
+    {
+        static $instance = null;
+        if (is_null($instance)) {
+            $instance = new static($router, $container);
+        }
+
+        return $instance;
+    }
+
     public function start()
     {
+        $this->container->handle();
+
         require('../app/routes.php');
 
         die($this->router->handle($this->attributes['REDIRECT_URL'], $this->attributes));
